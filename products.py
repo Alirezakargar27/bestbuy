@@ -21,7 +21,7 @@ class Product:
             self.deactivate()
 
     def is_active(self) -> bool:
-        return self.active
+        return self.quantity > 0
 
     def activate(self):
         self.active = True
