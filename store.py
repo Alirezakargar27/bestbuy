@@ -1,7 +1,6 @@
 from typing import List, Tuple
 from products import Product
 
-
 class Store:
     def __init__(self, products: List[Product]):
         self.products = products  # List to hold all products in the store
@@ -31,3 +30,8 @@ class Store:
             except Exception as e:
                 print(f"Error ordering {product.name}: {e}")
         return total_price
+
+    def show_all_products(self):
+        print("\nList of all products in store:")
+        for product in self.products:
+            print(product.show())

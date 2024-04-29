@@ -1,4 +1,4 @@
-from products import Product
+from products import Product, PercentDiscount, SecondHalfPrice, ThirdOneFree
 from store import Store
 
 def start(store):
@@ -13,36 +13,26 @@ def start(store):
         choice = input("Please choose a number: ")
 
         if choice == "1":
-            # List all products in store
-            print("\nList of all products in store:")
-            all_products = store.get_all_products()
-            if not all_products:
-                print("No products available.")
-            else:
-                for idx, product in enumerate(all_products, 1):
-                    print(f"{idx}. {product.name}, Price: ${product.price}, Quantity: {product.quantity}")
+            store.show_all_products()
 
         elif choice == "2":
-            # Show total quantity of all products in store
             total_quantity = store.get_total_quantity()
             print(f"\nTotal of {total_quantity} items in store")
 
         elif choice == "3":
-            # Make an order
             print("\nCreating an order...")
-            all_products = store.get_all_products()
+            all_products = store.products
 
             if not all_products:
                 print("No products available for ordering.")
             else:
                 print("\nAvailable Products:")
                 for idx, product in enumerate(all_products, 1):
-                    print(f"{idx}. {product.name}, Price: ${product.price}, Quantity: {product.quantity}")
+                    print(f"{idx}. {product.show()}")
 
                 order_list = []
                 while True:
                     try:
-                        # Prompt user to choose a product for ordering
                         print("Enter the product number you want to order (or 'done' to finish):")
                         product_number = input("Product # (or 'done'): ")
                         if product_number.lower() == "done":
@@ -66,7 +56,6 @@ def start(store):
                     print(f"Order placed successfully! Total price: ${total_price:.2f}")
 
         elif choice == "4":
-            # Quit
             print("Thank you for using the Store Management System. Goodbye!")
             break
 
@@ -74,15 +63,23 @@ def start(store):
             print("Invalid choice. Please choose a number from 1 to 4.")
 
 if __name__ == "__main__":
-    # Setup initial stock of inventory
     product_list = [
         Product("MacBook Air M2", price=1450, quantity=100),
         Product("Bose QuietComfort Earbuds", price=250, quantity=500),
-        Product("Google Pixel 7", price=500, quantity=250)
+        Product("Google Pixel 7", price=500, quantity=250),
+        Product("Windows License", price=125, quantity=0),
+        Product("Shipping", price=10, quantity=250)
     ]
 
-    # Create a Store object with the initial inventory
-    best_buy = Store(product_list)
+    # Create promotion objects
+    second_half_price = SecondHalfPrice("Second Half price!")
+    third_one_free = ThirdOneFree("Third One Free!")
+    thirty_percent = PercentDiscount("30% off!", percent=30)
 
-    # Start the user interface
+    # Assign promotions to products
+    product_list[0].set_promotion(second_half_price)
+    product_list[1].set_promotion(third_one_free)
+    product_list[3].set_promotion(thirty_percent)
+
+    best_buy = Store(product_list)
     start(best_buy)
