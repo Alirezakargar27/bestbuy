@@ -33,5 +33,8 @@ class Store:
 
     def show_all_products(self):
         print("\nList of all products in store:")
-        for product in self.products:
-            print(product.show())
+        for idx, product in enumerate(self.products, 1):
+            promotion_info = product.promotion.name if product.promotion else "None"
+            quantity_info = "Unlimited" if product.quantity == 0 else product.quantity
+            print(
+                f"{idx}. {product.name}, Price: ${product.price}, Quantity: {quantity_info}, Promotion: {promotion_info}")

@@ -20,28 +20,26 @@ def start(store):
             print(f"\nTotal of {total_quantity} items in store")
 
         elif choice == "3":
-            print("\nCreating an order...")
             all_products = store.products
 
             if not all_products:
                 print("No products available for ordering.")
             else:
-                print("\nAvailable Products:")
                 for idx, product in enumerate(all_products, 1):
                     print(f"{idx}. {product.show()}")
 
                 order_list = []
                 while True:
                     try:
-                        print("Enter the product number you want to order (or 'done' to finish):")
-                        product_number = input("Product # (or 'done'): ")
-                        if product_number.lower() == "done":
+                        print("When you want to finish order, enter empty text:")
+                        product_number = input("Which product # do you want?: ")
+                        if product_number.lower() == " ":
                             break
 
                         product_index = int(product_number) - 1
                         if 0 <= product_index < len(all_products):
                             selected_product = all_products[product_index]
-                            quantity = int(input(f"How many units of '{selected_product.name}' do you want to order? "))
+                            quantity = int(input(f"What amount do you want? "))
                             if quantity > selected_product.quantity:
                                 print("Not enough stock available for this product.")
                             else:
@@ -53,10 +51,9 @@ def start(store):
 
                 if order_list:
                     total_price = store.order(order_list)
-                    print(f"Order placed successfully! Total price: ${total_price:.2f}")
+                    print(f"Product added to list!")
 
         elif choice == "4":
-            print("Thank you for using the Store Management System. Goodbye!")
             break
 
         else:
